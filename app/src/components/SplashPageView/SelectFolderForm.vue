@@ -1,31 +1,38 @@
 <style scoped>
-  .input-file {
-    padding-top: 4px;
-  }
-  label {
-    color: #fff;
-    font-weight: normal;
-  }
 </style>
 
 <template>
-  <form>
-    <label class="label" for="watch_folder">Watch this directory for replays:</label>
-    <nav class="level">
-      <div class="level-item has-text-centered">
-        <p class="control has-addons">
-          <input class="input input-file" type="file" id="watch_folder" webkitdirectory>
-          <a class="button is-info">
-            Watch Directory
-          </a>
-        </p>
-      </div>
-    </nav>
-  </form>
+  <div>
+    <a class="button is-info" @click="chooseDir">
+      Choose Directory
+    </a>
+    <div>
+      <p class="is-italics">{{ dir }}</p>
+    </div>
+  </div>
 </template>
 
 <script>
-  export default {
+  const {dialog} = require('electron').remote
 
+  export default {
+    data: function () {
+      return {
+        dir: ''
+      }
+    },
+    methods: {
+      chooseDir: function (e) {
+        var vm = this
+        dialog.showOpenDialog({
+          properties: ['openDirectory']
+        }, function (filePaths) {
+          vm.dir = ''
+          if (filePaths && Array.isArray(filePaths)) {
+            vm.dir = filePaths[0]
+          }
+        })
+      }
+    }
   }
 </script>

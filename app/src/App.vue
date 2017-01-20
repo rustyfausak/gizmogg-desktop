@@ -20,6 +20,11 @@
   .is-centered {
     text-align: center;
   }
+
+  .is-italics,
+  .is-italic {
+    font-style: italic;
+  }
 </style>
 
 <template>
