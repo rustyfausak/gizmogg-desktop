@@ -12,13 +12,10 @@ npm install
 npm run dev
 
 # build electron app for production
-npm run build
+npm run dist
 
 # lint all JS/Vue component files in `app/src`
 npm run lint
-
-# run webpack in production
-npm run pack
 ```
 More information can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/docs/npm_scripts.html).
 
