@@ -25,6 +25,10 @@
   .is-italic {
     font-style: italic;
   }
+
+  .is-monospace {
+    font-family: Consolas,monaco,monospace;
+  }
 </style>
 
 <template>

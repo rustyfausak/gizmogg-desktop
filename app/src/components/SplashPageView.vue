@@ -10,7 +10,8 @@
             <i class="fa fa-rocket fa-2x"></i>
             <div>gizmo.gg replay auto-uploader</div>
           </h1>
-          <select-folder-form></select-folder-form>
+          <hr class="is-dark">
+          <router-view></router-view>
         </div>
       </div>
     </section>
@@ -18,12 +19,7 @@
 </template>
 
 <script>
-  import SelectFolderForm from './SplashPageView/SelectFolderForm'
-
-  export default {
-    components: {
-      SelectFolderForm
-    },
-    name: 'splash-page'
-  }
+export default {
+  name: 'splash-page'
+}
 </script>
