@@ -1,13 +1,17 @@
 import * as types from '../mutation-types'
 var chokidar = require('chokidar')
+var request = require('request')
+var fs = require('fs')
 
 const state = {
   dir: null,
+  file: null,
   watcher: null
 }
 
 const getters = {
-  getDir: state => state.dir
+  getDir: state => state.dir,
+  getFile: state => state.file
 }
 
 const actions = {
@@ -21,13 +25,25 @@ const mutations = {
     state.dir = dir
     var watcher = null
     if (dir) {
-      console.log('dir set')
       watcher = chokidar.watch(dir, {
         ignored: /(^|[\/\\])\../,
         ignoreInitial: true,
         persistent: true
       }).on('add', function (path) {
-        console.log(path)
+        state.file = path
+        var formData = {
+          replay: {
+            value: fs.createReadStream(path),
+            options: { filename: path }
+          }
+        }
+        request.post({
+          url: 'http://159.203.137.158/upload',
+          formData: formData
+        }, function (error, response, body) {
+          console.log('request callback', error, response, body)
+          state.file = null
+        })
       })
     } else {
       if (state.watcher) {
@@ -35,7 +51,6 @@ const mutations = {
       }
     }
     state.watcher = watcher
-    console.log('state now ' + state.dir)
   }
 }
 

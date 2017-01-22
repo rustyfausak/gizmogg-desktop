@@ -62,6 +62,7 @@
     "bulma": "^0.3.1",
     "chokidar": "^1.6.1",
     "font-awesome": "^4.7.0",
+    "superagent": "^3.3.2",
     "vuex": "^2.1.1"
   }
 }

@@ -5,9 +5,15 @@
   <div>
     Watching
     <div class="is-monospace">{{ getDir }}</div>
-    <a class="button is-dark" @click="changeDir">
+    <a class="button is-dark" @click="changeDir" v-show="!getFile">
       Change Directory
     </a>
+    <div v-show="getFile">
+      <button class="button is-primary is-loading">Uploading..</button>
+      <div>
+        Uploading {{ getFile }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -17,10 +23,9 @@ import { mapGetters } from 'vuex'
 export default {
   computed: {
     ...mapGetters({
-      getDir: 'getDir'
+      getDir: 'getDir',
+      getFile: 'getFile'
     })
-  },
-  components: {
   },
   name: 'watch',
   methods: {
