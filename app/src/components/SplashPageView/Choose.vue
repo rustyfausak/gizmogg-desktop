@@ -7,7 +7,7 @@
       <div class="level-item">
         <a class="button is-info" @click="chooseDir">
           Choose Directory
-        </a>
+        </a>&nbsp;
         <a class="button is-success" @click="watchDir" v-show="dir">
           Watch
         </a>

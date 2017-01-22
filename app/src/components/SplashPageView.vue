@@ -1,6 +1,3 @@
-<style scoped>
-</style>
-
 <template>
   <div class="is-maximized is-centered">
     <section class="hero is-dark is-fullheight">

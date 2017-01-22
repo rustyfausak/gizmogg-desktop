@@ -7,6 +7,7 @@ import App from './App'
 import routes from './routes'
 
 import 'bulma/css/bulma.css'
+import './css/app.css'
 import 'font-awesome/css/font-awesome.css'
 
 Vue.use(Electron)

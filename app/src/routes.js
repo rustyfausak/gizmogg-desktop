@@ -5,6 +5,11 @@ export default [
     children: [
       {
         path: '/',
+        name: 'loading',
+        component: require('components/SplashPageView/Loading')
+      },
+      {
+        path: '/choose',
         name: 'choose-dir',
         component: require('components/SplashPageView/Choose')
       },
