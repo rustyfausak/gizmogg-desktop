@@ -1,12 +1,11 @@
 {
-  "name": "gizmogg",
-  "version": "0.0.0",
-  "description": "A Rocket League replay uploader",
+  "name": "gizmogg-desktop",
+  "version": "0.0.1",
+  "description": "Gizmo.gg A Rocket League replay uploader",
   "main": "electron.js",
   "dependencies": {
     "vue": "^2.0.1",
     "vue-electron": "^1.0.0",
-    "vue-resource": "^1.0.3",
     "vue-router": "^2.0.0",
     "vuex": "^2.0.0"
   },

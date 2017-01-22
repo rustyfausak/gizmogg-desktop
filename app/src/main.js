@@ -6,7 +6,6 @@ import Router from 'vue-router'
 import App from './App'
 import routes from './routes'
 
-import './stylesheets/app.scss'
 import 'bulma/css/bulma.css'
 import 'font-awesome/css/font-awesome.css'
 

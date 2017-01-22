@@ -4,14 +4,19 @@ var request = require('request')
 var fs = require('fs')
 
 const state = {
-  dir: null,
-  file: null,
-  watcher: null
+  dir: null, // the directory to watch
+  file: null, // the file currently being uploaded
+  watcher: null, // the directory watcher instance
+  last_file: null,
+  last_error: null,
+  last_at: null,
+  total: 0 // the total number of files uploaded
 }
 
 const getters = {
   getDir: state => state.dir,
-  getFile: state => state.file
+  getFile: state => state.file,
+  getLast: state => [state.last_file, state.last_error, state.last_at]
 }
 
 const actions = {
@@ -42,6 +47,9 @@ const mutations = {
           formData: formData
         }, function (error, response, body) {
           console.log('request callback', error, response, body)
+          state.last_file = state.file
+          state.last_error = error
+          state.last_at = 0
           state.file = null
         })
       })
@@ -49,6 +57,9 @@ const mutations = {
       if (state.watcher) {
         state.watcher.close()
       }
+      state.last_file = null
+      state.last_error = null
+      state.last_at = null
     }
     state.watcher = watcher
   }
