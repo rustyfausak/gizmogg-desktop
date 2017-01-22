@@ -22,19 +22,24 @@ export default {
   },
   name: 'loading',
   methods: {
+    useDir: function (dir) {
+      this.$store.dispatch('chooseDir', dir)
+      this.$router.push('watch')
+    },
     load: function () {
       console.log('Loading..')
-      var dir = null
+      var vm = this
       if (fs.existsSync('path.txt')) {
         console.log('Found path.txt')
-        fs.readFile('path.txt', function (error, data) {
+        fs.readFile('path.txt', 'utf8', function (error, data) {
           if (error) {
-            throw error
+            vm.$router.push('choose')
           }
-          dir = data.trim()
+          vm.useDir(data.trim())
         })
       } else {
         console.log('No path.txt found')
+        var dir = null
         switch (os.platform()) {
           case 'win32':
             dir = path.join(os.homedir(), 'Documents', 'My Games', 'Rocket League', 'TAGame', 'Demos')
@@ -46,14 +51,13 @@ export default {
             dir = path.join(os.homedir(), '.local', 'share', 'Rocket League', 'TAGame', 'Demos')
             break
         }
-      }
-      if (dir) {
-        console.log('use dir', dir)
-        this.$store.dispatch('chooseDir', dir)
-        this.$router.push('watch')
-      } else {
-        console.log('no dir')
-        this.$router.push('choose')
+        if (dir) {
+          console.log('use dir', dir)
+          vm.useDir(dir)
+        } else {
+          console.log('no dir')
+          vm.$router.push('choose')
+        }
       }
     }
   },

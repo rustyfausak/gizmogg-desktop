@@ -30,6 +30,7 @@ const mutations = {
     state.dir = dir
     var watcher = null
     if (dir) {
+      fs.writeFile('path.txt', dir, 'utf8')
       watcher = chokidar.watch(dir, {
         ignored: /(^|[\/\\])\../,
         ignoreInitial: true,

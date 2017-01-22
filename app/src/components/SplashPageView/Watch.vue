@@ -31,7 +31,7 @@ export default {
   methods: {
     changeDir: function (e) {
       this.$store.dispatch('chooseDir', null)
-      this.$router.push('/')
+      this.$router.push('/choose')
     }
   }
 }
