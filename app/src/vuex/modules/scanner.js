@@ -8,7 +8,7 @@ const state = {
   dir: null, // the directory to watch
   file: null, // the file currently being uploaded
   watcher: null, // the directory watcher instance
-  recent: [],
+  recent: [], // an array of recent uploads and their status
   total: 0 // the total number of files uploaded
 }
 
@@ -27,48 +27,70 @@ const actions = {
 }
 
 const mutations = {
+  /**
+   * Choose the directory to watch. To reset, pass null.
+   *
+   * @param string|null dir
+   */
   [types.CHOOSE_DIR] (state, dir) {
     state.dir = dir
-    var watcher = null
-    if (dir) {
+    if (!dir) {
+      // No directory was passed in, so reset the watcher
+      if (state.watcher) {
+        state.watcher.close()
+      }
+      state.watcher = null
+    } else {
+
+      // Save this configuration for future runs
       fs.writeFile('path.txt', dir, 'utf8')
-      watcher = chokidar.watch(dir, {
+
+      // Create a directory watcher and watch for file adds
+      state.watcher = chokidar.watch(dir, {
         ignored: /(^|[\/\\])\../,
         ignoreInitial: true,
         persistent: true
       }).on('add', function (path) {
+
+        // Save the filename in `state.file`, which is the file currently being uploaded
         state.file = _path.basename(path)
+
+        // Create the form data with the file stream for post to the server
         var formData = {
           replay: {
             value: fs.createReadStream(path),
             options: { filename: path }
           }
         }
-        console.log('uploading', state.file)
+
+        // Upload the file to the server
         request.post({
           url: 'http://159.203.137.158/upload',
           formData: formData
         }, function (error, response, body) {
-          if (!error && response.statusCode !== 303) {
-            error = response.statusCode + ' ' + response.statusMessage
+          if (response.statusCode !== 303) {
+            // 303 is a successful upload, anything else show an error
+            error = response.statusCode + ' ' + response.statusMessage + (error ? ': ' + error : '')
           }
-          console.log('request callback', error, response, body)
+
+          // Add this upload to the list of recent uploads
           state.recent.push({
             file: state.file,
-            error: error
+            error: error,
           })
+
+          // Trim the recent uploads list
           var tmp = state.recent.slice(-3)
           state.recent = tmp
+
+          // The file is done uploading so set `state.file` to null
           state.file = null
+
+          // Increment the total number of uploads
           state.total++
         })
       })
-    } else {
-      if (state.watcher) {
-        state.watcher.close()
-      }
     }
-    state.watcher = watcher
   }
 }
 
