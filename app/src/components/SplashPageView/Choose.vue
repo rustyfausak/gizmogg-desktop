@@ -5,19 +5,20 @@
   <div>
     <div class="level">
       <div class="level-item">
-        <a class="button is-info" @click="chooseDir">
-          Choose Directory
+        <a class="button is-primary is-outlined" @click="chooseDir">
+          <span class="icon">
+            <i class="fa fa-folder"></i>
+          </span>
+          <span>Choose Directory</span>
         </a>&nbsp;
-        <a class="button is-success" @click="watchDir" v-show="dir">
+        <a class="button is-info" @click="watchDir" v-show="dir">
           Watch
         </a>
       </div>
     </div>
     <div class="level">
       <div class="level-item">
-        <div class="is-monospace">
-          {{ dir }}
-        </div>
+        <span class="tag is-black is-monospace" v-show="dir">{{ dir }}</span>
       </div>
     </div>
   </div>

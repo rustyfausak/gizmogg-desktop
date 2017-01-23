@@ -2,21 +2,22 @@ import * as types from '../mutation-types'
 var chokidar = require('chokidar')
 var request = require('request')
 var fs = require('fs')
+var _path = require('path')
 
 const state = {
   dir: null, // the directory to watch
   file: null, // the file currently being uploaded
   watcher: null, // the directory watcher instance
-  last_file: null,
-  last_error: null,
-  last_at: null,
+  recent: [],
   total: 0 // the total number of files uploaded
 }
 
 const getters = {
   getDir: state => state.dir,
   getFile: state => state.file,
-  getLast: state => [state.last_file, state.last_error, state.last_at]
+  getRecent: state => state.recent.reverse(),
+  getTotal: state => state.total,
+  getMore: state => state.total - state.recent.length
 }
 
 const actions = {
@@ -36,7 +37,7 @@ const mutations = {
         ignoreInitial: true,
         persistent: true
       }).on('add', function (path) {
-        state.file = path
+        state.file = _path.basename(path)
         var formData = {
           replay: {
             value: fs.createReadStream(path),
@@ -48,19 +49,19 @@ const mutations = {
           formData: formData
         }, function (error, response, body) {
           console.log('request callback', error, response, body)
-          state.last_file = state.file
-          state.last_error = error
-          state.last_at = 0
+          state.recent.push({
+            file: state.file,
+            error: error
+          })
+          state.recent = state.recent.slice(-3)
           state.file = null
+          state.total++
         })
       })
     } else {
       if (state.watcher) {
         state.watcher.close()
       }
-      state.last_file = null
-      state.last_error = null
-      state.last_at = null
     }
     state.watcher = watcher
   }
