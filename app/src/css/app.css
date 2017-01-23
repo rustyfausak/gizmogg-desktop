@@ -1,21 +1,53 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.is-maximized {
+  height: 100%;
+  width: 100%;
+}
+
+.is-centered {
+  text-align: center;
+}
+
+.is-italics,
+.is-italic,
+.text-italic,
+.text-italics {
+  font-style: italic;
+}
+
+.is-monospace {
+  font-family: Consolas,monaco,monospace;
+}
+
 hr.is-dark {
   background-color: #666;
 }
+
 .is-darker {
   background-color: #242424;
   border-color: rgba(255, 255, 255, 0.3);
 }
+
 .hero .tag > a {
   color: #00D1B2;
 }
+
 .hero-body {
   padding: 20px 10px;
   flex-grow: 0;
 }
+
 .is-centered {
   margin: 0 auto;
-}
-.text-italic,
-.text-italics {
-  font-style: italic;
 }

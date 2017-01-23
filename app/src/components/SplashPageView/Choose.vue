@@ -1,8 +1,6 @@
-<style scoped>
-</style>
-
 <template>
   <div>
+
     <div class="level">
       <div class="level-item">
         <a class="button is-primary is-outlined" @click="chooseDir">
@@ -16,11 +14,13 @@
         </a>
       </div>
     </div>
+
     <div class="level">
       <div class="level-item">
         <span class="tag is-black is-monospace" v-show="dir">{{ dir }}</span>
       </div>
     </div>
+
   </div>
 </template>
 

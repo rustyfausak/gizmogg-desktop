@@ -1,6 +1,3 @@
-<style scoped>
-</style>
-
 <template>
   <div>
     <button class="button is-loading is-dark"></button>
