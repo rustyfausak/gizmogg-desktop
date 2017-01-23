@@ -17,7 +17,7 @@
         <a class="button is-loading is-primary is-outlined is-small">Uploading</a>
         &nbsp;{{ getFile }}
       </a>
-      <a class="panel-block is-active is-disabled" v-show="getRecent.length" v-for="item in getRecent">
+      <a class="panel-block is-active is-disabled" v-show="getRecent.length" v-for="item in getRecent.reverse()">
         <span class="panel-icon">
           <i class="fa fa-file-video-o fa-fw"></i>
         </span>

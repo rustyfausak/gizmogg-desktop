@@ -15,7 +15,7 @@ const state = {
 const getters = {
   getDir: state => state.dir,
   getFile: state => state.file,
-  getRecent: state => state.recent.reverse(),
+  getRecent: state => state.recent,
   getTotal: state => state.total,
   getMore: state => state.total - state.recent.length
 }
@@ -44,16 +44,21 @@ const mutations = {
             options: { filename: path }
           }
         }
+        console.log('uploading', state.file)
         request.post({
           url: 'http://159.203.137.158/upload',
           formData: formData
         }, function (error, response, body) {
+          if (!error && response.statusCode !== 303) {
+            error = response.statusCode + ' ' + response.statusMessage
+          }
           console.log('request callback', error, response, body)
           state.recent.push({
             file: state.file,
             error: error
           })
-          state.recent = state.recent.slice(-3)
+          var tmp = state.recent.slice(-3)
+          state.recent = tmp
           state.file = null
           state.total++
         })
