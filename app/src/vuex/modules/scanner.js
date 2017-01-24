@@ -51,7 +51,7 @@ function uploadFile (state, path) {
 
   // Upload the file to the server
   request.post({
-    url: 'http://159.203.137.158/upload',
+    url: 'http://159.203.137.158/uploads',
     formData: formData
   }, function (error, response, body) {
     // Increment the total number of uploads
