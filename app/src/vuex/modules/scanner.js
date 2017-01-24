@@ -15,14 +15,8 @@ const state = {
 
 const getters = {
   getDir: state => state.dir,
-  getFile: state => state.file ? _path.basename(state.file) : null,
-  getRecent: function (state) {
-    var tmp = state.recent.slice()
-    return tmp.map(function (item) {
-      item.file = _path.basename(item.file)
-      return item
-    })
-  },
+  getFileBasename: state => state.file ? _path.basename(state.file) : null,
+  getRecent: state => state.recent,
   getTotal: state => state.total,
   getNumMore: state => state.total - state.recent.length,
   getNumInQueue: state => state.queue.length
@@ -34,37 +28,45 @@ const actions = {
   },
   clearQueue ({ commit }) {
     commit(types.CLEAR_QUEUE)
+  },
+  retryFile ({ commit }, file) {
+    commit(types.RETRY_FILE, file)
   }
 }
 
-function uploadFile (state, path) {
+function uploadFile (state, file) {
+  console.log('Attempting to upload file', file)
+
   // Save the filename in `state.file`, which is the file currently being uploaded
-  state.file = path
+  state.file = file
 
   // Create the form data with the file stream for post to the server
   var formData = {
     replay: {
-      value: fs.createReadStream(path),
-      options: { filename: path }
+      value: fs.createReadStream(state.file),
+      options: { filename: state.file }
     }
   }
 
   // Upload the file to the server
   request.post({
-    url: 'http://159.203.137.158/upload',
+    url: 'http://159.203.137.158/uploads',
     formData: formData
   }, function (error, response, body) {
+    console.log(error, response, body)
+
     // Increment the total number of uploads
     state.total++
 
-    if (response.statusCode !== 303) {
-      // 303 is a successful upload, anything else show an error
-      error = response.statusCode + ' ' + response.statusMessage + (error ? ': ' + error : '')
+    if (!error && response.statusCode !== 303) {
+      // 303 is a successful upload
+      error = response.statusCode + ' ' + response.statusMessage
     }
 
     // Add this upload to the list of recent uploads
     state.recent.push({
       file: state.file,
+      basename: _path.basename(state.file),
       error: error,
       at: new Date()
     })
@@ -75,8 +77,8 @@ function uploadFile (state, path) {
 
     // The file is done uploading so set `state.file` to null or the next file in the queue
     if (state.queue.length) {
-      path = state.queue.shift()
-      uploadFile(state, path)
+      file = state.queue.shift()
+      uploadFile(state, file)
     } else {
       state.file = null
     }
@@ -106,15 +108,15 @@ const mutations = {
         ignored: /(^|[\/\\])\../,
         ignoreInitial: true,
         persistent: true
-      }).on('add', function (path) {
-        console.log('add', path)
+      }).on('add', function (file) {
+        console.log('add', file)
         // Already uploading a file, add this one to the queue
         if (state.file) {
           console.log('queued')
-          state.queue.push(path)
+          state.queue.push(file)
         } else {
           console.log('uploading..')
-          uploadFile(state, path)
+          uploadFile(state, file)
         }
       })
     }
@@ -124,6 +126,12 @@ const mutations = {
    */
   [types.CLEAR_QUEUE] (state) {
     state.queue = []
+  },
+  /**
+   * Retrys the given file.
+   */
+  [types.RETRY_FILE] (state, file) {
+    uploadFile(state, file)
   }
 }
 
