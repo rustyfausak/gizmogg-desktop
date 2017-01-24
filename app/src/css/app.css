@@ -10,6 +10,14 @@ body {
   height: 100%;
 }
 
+.text-primary {
+  color: #00D1B2;
+}
+
+.panel.is-dark div.panel-block {
+  color: #fff;
+}
+
 .is-spacer {
   display: inline-block;
   width: 10px;

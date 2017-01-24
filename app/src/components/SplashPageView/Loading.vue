@@ -27,7 +27,7 @@ export default {
       console.log('Loading..')
       var vm = this
       if (fs.existsSync('path.txt')) {
-        console.log('Found path.txt')
+        console.log('Found path.txt.')
         fs.readFile('path.txt', 'utf8', function (error, data) {
           if (error) {
             vm.$router.push('choose')
@@ -35,7 +35,7 @@ export default {
           vm.useDir(data.trim())
         })
       } else {
-        console.log('No path.txt found')
+        console.log('No path.txt found.')
         var dir = null
         switch (os.platform()) {
           case 'win32':
@@ -49,10 +49,10 @@ export default {
             break
         }
         if (dir) {
-          console.log('use dir', dir)
+          console.log('Automatically set directory to:', dir)
           vm.useDir(dir)
         } else {
-          console.log('no dir')
+          console.log('Could not automatically determine replay directory.')
           vm.$router.push('choose')
         }
       }

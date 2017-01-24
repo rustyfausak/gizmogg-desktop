@@ -24,8 +24,8 @@ function createWindow () {
     webPreferences: {
       webSecurity: false
     },
-    height: 450,
-    width: 650
+    height: 400,
+    width: 550
   })
 
   mainWindow.loadURL(config.url)

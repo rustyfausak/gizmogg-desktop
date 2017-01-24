@@ -31,7 +31,7 @@ const {dialog} = require('electron').remote
 export default {
   data: function () {
     return {
-      dir: ''
+      dir: null
     }
   },
   methods: {
@@ -40,7 +40,7 @@ export default {
       dialog.showOpenDialog({
         properties: ['openDirectory']
       }, function (filePaths) {
-        vm.dir = ''
+        vm.dir = null
         if (filePaths && Array.isArray(filePaths)) {
           vm.dir = filePaths[0]
         }
