@@ -13,11 +13,10 @@
     "dev": "node tasks/runner.js",
     "lint": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter app",
     "lint:fix": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter --fix app",
-    "pack": "cross-env NODE_ENV=production webpack -p --progress --colors",
+    "pack": "build --dir",
     "vue:route": "node tasks/vue/route.js",
     "vuex:module": "node tasks/vuex/module.js",
     "postinstall": "npm run lint:fix && cd app && npm install",
-    "pack": "build --dir",
     "dist": "build"
   },
   "build": {
@@ -58,6 +57,7 @@
     "font-awesome": "^4.7.0",
     "html-webpack-plugin": "^2.16.1",
     "json-loader": "^0.5.4",
+    "moment": "^2.17.1",
     "node-sass": "^4.3.0",
     "sass-loader": "^4.1.1",
     "style-loader": "^0.13.1",
@@ -67,6 +67,7 @@
     "vue-html-loader": "^1.2.2",
     "vue-loader": "^9.5.1",
     "vue-style-loader": "^1.0.0",
+    "vue-timeago": "^3.1.5",
     "vuex": "^2.1.1",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1"

@@ -10,6 +10,11 @@ body {
   height: 100%;
 }
 
+.is-spacer {
+  display: inline-block;
+  width: 10px;
+}
+
 .is-maximized {
   height: 100%;
   width: 100%;
@@ -24,6 +29,14 @@ body {
 .text-italic,
 .text-italics {
   font-style: italic;
+}
+
+.flex-pull-right {
+  margin-left: auto;
+}
+
+.has-text-muted {
+  color: #ccc;
 }
 
 .is-monospace {

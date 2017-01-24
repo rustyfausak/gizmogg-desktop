@@ -8,7 +8,8 @@
             <i class="fa fa-folder"></i>
           </span>
           <span>Choose Directory</span>
-        </a>&nbsp;
+        </a>
+        <span class="is-spacer"></span>
         <a class="button is-info" @click="watchDir" v-show="dir">
           Watch
         </a>

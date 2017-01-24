@@ -41,7 +41,6 @@ const mutations = {
       }
       state.watcher = null
     } else {
-
       // Save this configuration for future runs
       fs.writeFile('path.txt', dir, 'utf8')
 
@@ -51,7 +50,6 @@ const mutations = {
         ignoreInitial: true,
         persistent: true
       }).on('add', function (path) {
-
         // Save the filename in `state.file`, which is the file currently being uploaded
         state.file = _path.basename(path)
 
@@ -77,6 +75,7 @@ const mutations = {
           state.recent.push({
             file: state.file,
             error: error,
+            at: new Date()
           })
 
           // Trim the recent uploads list

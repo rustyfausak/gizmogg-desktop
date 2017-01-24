@@ -14,15 +14,16 @@
           <i class="fa fa-file-video-o fa-fw"></i>
         </span>
         <a class="button is-loading is-primary is-outlined is-small">Uploading</a>
-        &nbsp;{{ getFile }}
+        <span class="is-spacer"></span>
+        {{ getFile }}
       </a>
 
-      <a class="panel-block is-active is-disabled" v-show="getRecent.length" v-for="item in getRecent.reverse()">
+      <a class="panel-block is-active is-disabled" v-show="getRecent.length" v-for="item in getRecent.slice().reverse()">
         <span class="panel-icon">
           <i class="fa fa-file-video-o fa-fw"></i>
         </span>
         {{ item.file }} <span class="tag is-danger" v-show="item.error">{{ item.error }}</span>
-        <span class="text-italic has-text-muted">...</span>
+        <div class="text-italic has-text-muted flex-pull-right"><timeago :since="item.at" :auto-update="15"></timeago></div>
       </a>
 
       <a class="panel-block is-disabled text-italic" v-show="getMore && !getFile">
@@ -37,9 +38,9 @@
           <span class="icon is-small">
             <i class="fa fa-folder fa-fw"></i>
           </span>
-          &nbsp;
+          <span class="is-spacer"></span>
           <span v-show="getDir">{{ getDir }}</span>
-          &nbsp;
+          <span class="is-spacer"></span>
           <a @click="changeDir" v-show="!getFile">
             Change
           </a>
