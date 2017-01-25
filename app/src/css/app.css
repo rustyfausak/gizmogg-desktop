@@ -10,8 +10,9 @@ body {
   height: 100%;
 }
 
+a.text-primary,
 .text-primary {
-  color: #00D1B2;
+  color: #00D1B2!important;
 }
 
 .panel.is-dark div.panel-block {

@@ -1,6 +1,6 @@
 {
   "name": "gizmogg-desktop",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Gizmo.gg A Rocket League replay uploader",
   "main": "electron.js",
   "dependencies": {

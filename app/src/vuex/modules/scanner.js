@@ -34,6 +34,13 @@ const actions = {
   }
 }
 
+/**
+ * Attempt to upload the given file. Updates the state with information
+ * relevant to the file upload.
+ *
+ * @param object state
+ * @param string file path of file
+ */
 function uploadFile (state, file) {
   console.log('Attempting to upload file', file)
 
@@ -60,7 +67,7 @@ function uploadFile (state, file) {
 
     if (!error && response.statusCode !== 303) {
       // 303 is a successful upload
-      error = response.statusCode + ' ' + response.statusMessage
+      error = response.statusCode + ' ' + response.statusMessage + (body ? ': ' + body : '')
     }
 
     // Add this upload to the list of recent uploads
@@ -75,7 +82,8 @@ function uploadFile (state, file) {
     var tmp = state.recent.slice(-3)
     state.recent = tmp
 
-    // The file is done uploading so set `state.file` to null or the next file in the queue
+    // The file is done uploading so set `state.file` to null or upload the
+    // next file in the queue
     if (state.queue.length) {
       file = state.queue.shift()
       uploadFile(state, file)
