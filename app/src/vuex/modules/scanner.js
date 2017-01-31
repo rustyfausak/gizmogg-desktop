@@ -57,7 +57,7 @@ function uploadFile (state, file) {
 
   // Upload the file to the server
   request.post({
-    url: 'http://159.203.137.158/api/uploads',
+    url: 'http://gizmo.gg/api/uploads',
     formData: formData
   }, function (error, response, body) {
     console.log(error, response, body)
